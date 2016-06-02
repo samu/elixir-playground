@@ -27,6 +27,6 @@ defmodule ElixirPlayground.Mixfile do
   #
   # Type "mix help deps" for more examples and options
   defp deps do
-    []
+    [{:mongodb_ecto, "~> 0.1"}]
   end
 end
