@@ -8,7 +8,7 @@ defmodule KV.Bucket do
   end
 
   def put receiver, item, quantity do
-    Agent.update receiver, &Map.put(&1, item, 3)
+    Agent.update receiver, &Map.put(&1, item, quantity)
   end
 
   def delete receiver, item do
