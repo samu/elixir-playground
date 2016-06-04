@@ -7,4 +7,11 @@ defmodule AtmTest do
     send pid, {:check, self}
     assert_receive 10
   end
+
+  test "it allows to withdrawh" do
+    pid = spawn_link(ElixirPlayground.Atm, :start, [100])
+    send pid, {:withdraw, 10}
+    send pid, {:check, self}
+    assert_receive 90
+  end
 end

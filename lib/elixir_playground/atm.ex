@@ -7,6 +7,8 @@ defmodule ElixirPlayground.Atm do
     receive do
       {:deposit, amount} ->
         manage balance + amount
+      {:withdraw, amount} ->
+        manage balance - amount
       {:check, receiver} ->
         send receiver, balance
         manage balance
