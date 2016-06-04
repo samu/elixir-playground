@@ -4,6 +4,7 @@ defmodule ElixirPlayground do
       receive do
         {:pong, receiver} -> send receiver, :ping
       end
+      start
     end
   end
 end
