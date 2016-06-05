@@ -11,6 +11,6 @@ defmodule ElixirPlayground.KV.Supervisor do
       supervisor(ElixirPlayground.KV.Bucket.Supervisor, [])
     ]
 
-    supervise(children, strategy: :one_for_one)
+    supervise(children, strategy: :rest_for_one)
   end
 end
