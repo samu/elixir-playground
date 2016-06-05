@@ -1,4 +1,4 @@
-defmodule KV.Supervisor do
+defmodule ElixirPlayground.KV.Supervisor do
   use Supervisor
 
   def start_link do
@@ -7,7 +7,8 @@ defmodule KV.Supervisor do
 
   def init(:ok) do
     children = [
-      worker(KV.Registry, [KV.Registry])
+      worker(ElixirPlayground.KV.Registry, [ElixirPlayground.KV.Registry]),
+      supervisor(ElixirPlayground.KV.Bucket.Supervisor, [])
     ]
 
     supervise(children, strategy: :one_for_one)

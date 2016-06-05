@@ -1,4 +1,4 @@
-defmodule KV.Registry do
+defmodule ElixirPlayground.KV.Registry do
   use GenServer
 
   def start_link(name) do
@@ -28,7 +28,7 @@ defmodule KV.Registry do
     if Map.has_key?(names, name) do
       {:noreply, {names, refs}}
     else
-      {:ok, pid} = KV.Bucket.start_link
+      {:ok, pid} = ElixirPlayground.KV.Bucket.Supervisor.start_bucket
       ref = Process.monitor(pid)
       refs = Map.put(refs, ref, name)
       names = Map.put(names, name, pid)
