@@ -3,6 +3,7 @@ defmodule Webshot.ServerTest do
 
   setup do
     File.rm_rf("webshots")
+    Webshot.Server.start_link
     :ok
   end
 

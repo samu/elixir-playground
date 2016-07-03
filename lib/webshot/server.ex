@@ -1,9 +1,20 @@
 defmodule Webshot.Server do
+  use GenServer
+
+  def start_link do
+    GenServer.start_link(__MODULE__, [], name: __MODULE__)
+  end
+
   def take_snapshot(sender, url) do
+    GenServer.cast(__MODULE__, {:take_snapshot, sender, url})
+  end
+
+  def handle_cast({:take_snapshot, sender, url}, pool) do
     Task.async fn ->
       result = run_command(url)
       send(sender, {:ok, result})
     end
+    {:noreply, []}
   end
 
   defp run_command(url) do
