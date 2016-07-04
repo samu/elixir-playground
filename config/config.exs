@@ -10,3 +10,6 @@ config :elixir_playground, Upload.Repo,
   username: "postgres",
   password: "postgres",
   pool: Ecto.Adapters.SQL.Sandbox
+
+config :elixir_playground, Server.Endpoint,
+  http: [port: 4000]
