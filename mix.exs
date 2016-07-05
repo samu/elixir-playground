@@ -15,7 +15,7 @@ defmodule ElixirPlayground.Mixfile do
   # Type "mix help compile.app" for more information
   def application do
     [mod: {ElixirPlayground, []},
-     applications: [:phoenix, :cowboy, :logger, :postgrex, :ecto]]
+     applications: [:cowboy, :logger, :postgrex, :ecto]]
   end
 
   # Dependencies can be Hex packages:

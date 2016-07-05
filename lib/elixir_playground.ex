@@ -6,6 +6,7 @@ defmodule ElixirPlayground do
 
     children = [
       supervisor(Server.Endpoint, []),
+      supervisor(Upload.Repo, [])
     ]
 
     opts = [strategy: :one_for_one, name: Snippster.Supervisor]
