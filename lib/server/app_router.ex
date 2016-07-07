@@ -1,20 +1,10 @@
 defmodule AppRouter do
-  use Plug.Router
+  use Plug.Builder
   import Plug.Conn
 
-  plug :match
-  plug :dispatch
+  plug Plug.Static,
+    at: "/public",
+    from: "/Users/samuelmueller/Development/vue-playground"
 
-  get "/hello/:id" do
-    case Upload.Repo.get(Snapshot, id) do
-      nil -> send_resp(conn, 404, "entry not found :(")
-      snapshot ->
-        put_resp_content_type(conn, "image/png")
-          |> send_resp(200, snapshot.data)
-    end
-  end
-
-  match _ do
-    send_resp(conn, 404, "woops")
-  end
+  plug LePlug
 end
