@@ -1,10 +1,13 @@
 defmodule AppRouter do
   use Plug.Builder
-  import Plug.Conn
 
   plug Plug.Static,
     at: "/public",
     from: "/Users/samuelmueller/Development/vue-playground"
 
-  plug LePlug
+  plug Plug.Static,
+    at: "/frontend",
+    from: "frontend"
+
+  plug Controller
 end
