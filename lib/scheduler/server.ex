@@ -9,11 +9,11 @@ defmodule Scheduler.Server do
     GenServer.call(__MODULE__, {:do_work, work})
   end
 
-  def handle_call({:do_work, work}, _sender, {client} = state) do
-    Task.async fn ->
+  def handle_call({:do_work, {work, client}}, _sender, state) do
+    Task.Supervisor.async_nolink(Scheduler.Server.TaskSupervisor, fn ->
       result = work.()
       send(client, {:ok, result})
-    end
+    end)
 
     {:reply, true, state}
   end
