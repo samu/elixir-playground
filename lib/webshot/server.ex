@@ -1,6 +1,5 @@
 defmodule Webshot.Server do
   use GenServer
-  alias Webshot.Pool
 
   def start_link(scheduler_name) do
     GenServer.start_link(__MODULE__, {scheduler_name}, name: __MODULE__)
@@ -24,8 +23,7 @@ defmodule Webshot.Server do
   end
 
   defp run_command(url) do
-    timestamp = :os.system_time(:milli_seconds)
-    filename = "#{timestamp}#{url}.png"
+    filename = "#{rand}.png"
     System.cmd("node", ["-e", command(url, filename)])
     {url, filename}
   end
@@ -35,5 +33,10 @@ defmodule Webshot.Server do
     var webshot = require('webshot');
     webshot('#{url}', './webshots/#{filename}', function(err) {});
     """
+  end
+
+  defp rand do
+    :random.seed(:os.system_time)
+    :random.uniform(100_000)
   end
 end
