@@ -5,7 +5,7 @@ defmodule ElixirPlayground do
     import Supervisor.Spec
 
     children = [
-      supervisor(Server.Endpoint, []),
+      supervisor(Endpoints.Server, []),
       supervisor(Upload.Repo, [])
     ]
 

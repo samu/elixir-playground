@@ -1,4 +1,4 @@
-defmodule Controller do
+defmodule Endpoints.Controller do
   use Plug.Router
   import Plug.Conn
 

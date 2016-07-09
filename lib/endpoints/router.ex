@@ -1,4 +1,4 @@
-defmodule AppRouter do
+defmodule Endpoints.Router do
   use Plug.Builder
 
   plug Plug.Static,
@@ -9,5 +9,5 @@ defmodule AppRouter do
     at: "/frontend",
     from: "frontend"
 
-  plug Controller
+  plug Endpoints.Controller
 end
