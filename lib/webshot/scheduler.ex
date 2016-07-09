@@ -1,4 +1,4 @@
-defmodule Scheduler.Server do
+defmodule Webshot.Scheduler do
   def do_work({work, client, name}) do
     Task.Supervisor.async_nolink(name, fn ->
       result = work.()

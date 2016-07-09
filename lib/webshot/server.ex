@@ -21,7 +21,7 @@ defmodule Webshot.Server do
       Pool.put
       result
     end
-    Scheduler.Server.do_work({work, sender, scheduler_name})
+    Webshot.Scheduler.do_work({work, sender, scheduler_name})
   end
 
   defp run_command(url) do
