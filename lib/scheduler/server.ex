@@ -1,20 +1,13 @@
 defmodule Scheduler.Server do
-  use GenServer
-
-  def start_link(client) do
-    GenServer.start_link(__MODULE__, {client}, name: __MODULE__)
+  def start_link(name) do
+    Task.Supervisor.start_link(name: name)
   end
 
-  def do_work(work) do
-    GenServer.call(__MODULE__, {:do_work, work})
-  end
-
-  def handle_call({:do_work, {work, client}}, _sender, state) do
-    Task.Supervisor.async_nolink(Scheduler.Server.TaskSupervisor, fn ->
+  def do_work({work, client, name}) do
+    Task.Supervisor.async_nolink(name, fn ->
       result = work.()
       send(client, {:ok, result})
     end)
-
-    {:reply, true, state}
+    true
   end
 end

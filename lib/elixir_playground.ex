@@ -7,7 +7,7 @@ defmodule ElixirPlayground do
     children = [
       supervisor(Server.Endpoint, []),
       supervisor(Upload.Repo, []),
-      supervisor(Scheduler.Supervisor, [:test])
+      # supervisor(Scheduler.Supervisor, [:test])
       # ,
       # supervisor(Task.Supervisor, [[name: ElixirPlayground.TaskSupervisor]])
     ]

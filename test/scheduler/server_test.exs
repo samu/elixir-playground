@@ -1,8 +1,10 @@
 defmodule ServerTest do
   use ExUnit.Case
 
+  @sup :test_sup
+
   setup do
-    Scheduler.Server.start_link(self)
+    Scheduler.Server.start_link(@sup)
     :ok
   end
 
@@ -11,7 +13,7 @@ defmodule ServerTest do
       {:output, 1}
     end
 
-    assert Scheduler.Server.do_work({work, self})
+    assert Scheduler.Server.do_work({work, self, @sup})
     assert_receive({:ok, {:output, 1}})
   end
 
@@ -23,9 +25,9 @@ defmodule ServerTest do
       end
     end
 
-    assert Scheduler.Server.do_work({produce_work.(1), self})
-    assert Scheduler.Server.do_work({produce_work.(2), self})
-    assert Scheduler.Server.do_work({produce_work.(3), self})
+    assert Scheduler.Server.do_work({produce_work.(1), self, @sup})
+    assert Scheduler.Server.do_work({produce_work.(2), self, @sup})
+    assert Scheduler.Server.do_work({produce_work.(3), self, @sup})
 
     assert_receive({:ok, 3}, 15)
   end
@@ -35,8 +37,8 @@ defmodule ServerTest do
       fn -> {1, _} = input end
     end
 
-    assert Scheduler.Server.do_work({produce_work.({2, 2}), self})
-    assert Scheduler.Server.do_work({produce_work.({1, 2}), self})
+    assert Scheduler.Server.do_work({produce_work.({2, 2}), self, @sup})
+    assert Scheduler.Server.do_work({produce_work.({1, 2}), self, @sup})
 
     assert_receive({:ok, {1, 2}})
     refute_receive({:ok, {2, 2}})
