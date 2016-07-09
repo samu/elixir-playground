@@ -4,7 +4,7 @@ defmodule ServerTest do
   @sup :test_sup
 
   setup do
-    Scheduler.Server.start_link(@sup)
+    Task.Supervisor.start_link(name: @sup)
     :ok
   end
 
