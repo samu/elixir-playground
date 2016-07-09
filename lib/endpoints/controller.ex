@@ -17,7 +17,7 @@ defmodule Endpoints.Controller do
   end
 
   post "/snapshot" do
-    IO.inspect conn.params
+    Webshot.Server.take_snapshot(self, conn.params["name"])
     send_resp(conn, 200, "yep!")
   end
 
