@@ -8,7 +8,7 @@ defmodule Endpoints.Controller do
   plug :dispatch
 
   get "/hello/:id" do
-    case Upload.Repo.get(Snapshot, id) do
+    case Database.Repo.get(Database.Snapshot, id) do
       nil -> send_resp(conn, 404, "entry not found :(")
       snapshot ->
         put_resp_content_type(conn, "image/png")

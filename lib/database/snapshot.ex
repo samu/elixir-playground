@@ -1,4 +1,4 @@
-defmodule Snapshot do
+defmodule Database.Snapshot do
   use Ecto.Schema
   import Ecto.Changeset
 

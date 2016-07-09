@@ -6,7 +6,7 @@ defmodule ElixirPlayground do
 
     children = [
       supervisor(Endpoints.Server, []),
-      supervisor(Upload.Repo, [])
+      supervisor(Database.Repo, [])
     ]
 
     opts = [strategy: :one_for_one, name: ElixirPlayground.Supervisor]
