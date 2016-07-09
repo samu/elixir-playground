@@ -3,13 +3,12 @@ defmodule Webshot.Supervisor do
 
   @scheduler_name Webshot.Scheduler
 
-  def start_link(pool_size \\ 10) do
-    Supervisor.start_link(__MODULE__, {:ok, pool_size}, name: __MODULE__)
+  def start_link do
+    Supervisor.start_link(__MODULE__, :ok, name: __MODULE__)
   end
 
-  def init({:ok, pool_size}) do
+  def init(:ok) do
     children = [
-      worker(Webshot.Pool, [pool_size]),
       worker(Webshot.Server, [@scheduler_name]),
       supervisor(Task.Supervisor, [[name: @scheduler_name]])
     ]

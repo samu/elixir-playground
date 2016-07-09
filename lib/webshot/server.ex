@@ -11,14 +11,13 @@ defmodule Webshot.Server do
   end
 
   def handle_call({:take_snapshot, sender, url}, _sender, {scheduler_name} = state) do
-    if slot = Pool.get, do: schedule_task(url, sender, scheduler_name)
-    {:reply, slot, state}
+    schedule_task(url, sender, scheduler_name)
+    {:reply, true, state}
   end
 
   defp schedule_task(url, sender, scheduler_name) do
     work = fn ->
       result = run_command(url)
-      Pool.put
       result
     end
     Webshot.Scheduler.do_work({work, sender, scheduler_name})
