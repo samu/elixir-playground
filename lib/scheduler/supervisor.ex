@@ -1,12 +1,16 @@
 defmodule Scheduler.Supervisor do
-  import Supervisor.Spec
+  use Supervisor
 
   def start_link(client) do
+    Supervisor.start_link(__MODULE__, {:ok, client})
+  end
+
+  def init({:ok, client}) do
     children = [
       supervisor(Task.Supervisor, [[name: Scheduler.Server.TaskSupervisor]]),
-      supervisor(Scheduler.Server, [client])
+      worker(Scheduler.Server, [client])
     ]
     opts = [strategy: :one_for_one]
-    Supervisor.start_link(children, opts)
+    supervise(children, opts)
   end
 end
