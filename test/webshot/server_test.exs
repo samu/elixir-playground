@@ -1,5 +1,5 @@
 defmodule Webshot.ServerTest do
-  use ExUnit.Case
+  use ExUnit.Case, async: true
 
   setup do
     File.rm_rf("webshots")
@@ -10,7 +10,7 @@ defmodule Webshot.ServerTest do
 
   describe "take_snapshot" do
     setup do
-      Webshot.Server.start_link
+      Webshot.Supervisor.start_link
       :ok
     end
 
@@ -28,7 +28,7 @@ defmodule Webshot.ServerTest do
 
   describe "pooling" do
     setup do
-      Webshot.Server.start_link(2)
+      Webshot.Supervisor.start_link(2)
       :ok
     end
 
@@ -40,7 +40,7 @@ defmodule Webshot.ServerTest do
     test "take_snapshot returns false if the webshot could not be scheduled" do
       assert Webshot.Server.take_snapshot(self, "google.com") == true
       assert Webshot.Server.take_snapshot(self, "google.com") == true
-      assert Webshot.Server.take_snapshot(self, "google.com") == false
+      assert Webshot.Server.take_snapshot(self, "github.com") == false
       assert_receive({:ok, _}, 5000, @timeout_message)
       assert_receive({:ok, _}, 5000, @timeout_message)
       refute_receive({:ok, _}, 5000, @timeout_message)
