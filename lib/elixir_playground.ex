@@ -5,11 +5,12 @@ defmodule ElixirPlayground do
     import Supervisor.Spec
 
     children = [
-      supervisor(Endpoints.Server, []),
+      # supervisor(Endpoints.Server, []),
       supervisor(Database.Repo, []),
       supervisor(Webshot.Supervisor, []),
       supervisor(Workers.WebshotConsumer.Supervisor, [Hub.Server.produce_webshot_consumer_action]),
-      supervisor(Hub.Supervisor, [])
+      supervisor(Hub.Supervisor, []),
+      supervisor(Web.Endpoint, []),
     ]
 
     opts = [strategy: :one_for_one, name: ElixirPlayground.Supervisor]
