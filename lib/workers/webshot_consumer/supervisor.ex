@@ -1,13 +1,13 @@
 defmodule Workers.WebshotConsumer.Supervisor do
   use Supervisor
 
-  def start_link(client) do
-    Supervisor.start_link(__MODULE__, {:ok, client}, name: __MODULE__)
+  def start_link(action) do
+    Supervisor.start_link(__MODULE__, {:ok, action}, name: __MODULE__)
   end
 
-  def init({:ok, client}) do
+  def init({:ok, action}) do
     children = [
-      worker(Workers.WebshotConsumer.Worker, [client]),
+      worker(Workers.WebshotConsumer.Worker, [action]),
     ]
 
     supervise(children, strategy: :one_for_one)

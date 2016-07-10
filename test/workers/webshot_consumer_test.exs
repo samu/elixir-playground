@@ -10,7 +10,12 @@ defmodule Workers.WebshotConsumerTest do
     File.rm_rf("webshots")
     File.mkdir("webshots")
 
-    Workers.WebshotConsumer.Supervisor.start_link(self)
+    me = self
+    action = fn file, entry ->
+      send me, {:webshot_consumed, file, entry.id}
+    end
+
+    Workers.WebshotConsumer.Supervisor.start_link(action)
     :ok
   end
 

@@ -1,20 +1,20 @@
 defmodule Workers.WebshotConsumer.Worker do
   @root_folder "./webshots"
 
-  def start_link(client) do
-    pid = spawn_link(__MODULE__, :work, [client])
+  def start_link(action) do
+    pid = spawn_link(__MODULE__, :work, [action])
     {:ok, pid}
   end
 
-  def work(client) do
+  def work(action) do
     Process.sleep(100)
     case File.ls(@root_folder) do
       {:ok, [file | t]} ->
         entry = do_work(file)
-        send client, {:webshot_consumed, file, entry.id}
+        action.(file, entry)
       _ -> :noop
     end
-    work(client)
+    work(action)
   end
 
   defp do_work(file) do

@@ -7,7 +7,9 @@ defmodule ElixirPlayground do
     children = [
       supervisor(Endpoints.Server, []),
       supervisor(Database.Repo, []),
-      supervisor(Webshot.Supervisor, [])
+      supervisor(Webshot.Supervisor, []),
+      supervisor(Workers.WebshotConsumer.Supervisor, [Hub.Server.produce_webshot_consumer_action]),
+      supervisor(Hub.Supervisor, [])
     ]
 
     opts = [strategy: :one_for_one, name: ElixirPlayground.Supervisor]
